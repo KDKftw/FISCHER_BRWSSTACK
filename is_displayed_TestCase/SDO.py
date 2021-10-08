@@ -9,7 +9,7 @@ from to_import import acceptConsent, URL, URL_stat, caps
 
 
 
-def test_SDO(desired_cap):
+def SDO(desired_cap):
     driver = webdriver.Remote(
         command_executor=comandExecutor,
         desired_capabilities=desired_cap)
@@ -74,4 +74,4 @@ def test_SDO(desired_cap):
     driver.quit()
 
 for cap in caps:
-        Thread(target=test_SDO, args=(cap,)).start()
+        Thread(target=SDO, args=(cap,)).start()

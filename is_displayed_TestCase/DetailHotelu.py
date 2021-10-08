@@ -10,7 +10,7 @@ from to_import import acceptConsent, URL_detail, caps, closePopupBanner
 ##there is new SRL rn so gotta prepare that, for now I created this test just for the detail of hotel it self, hard url
 
 
-def test_Detail(desired_cap):
+def Detail(desired_cap):
     driver = webdriver.Remote(
         command_executor=comandExecutor,
         desired_capabilities=desired_cap)
@@ -80,5 +80,5 @@ def test_Detail(desired_cap):
     driver.quit()
 
 for cap in caps:
-        Thread(target=test_Detail, args=(cap,)).start()
+        Thread(target=Detail, args=(cap,)).start()
 

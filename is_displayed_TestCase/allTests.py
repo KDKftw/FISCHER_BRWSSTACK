@@ -1,17 +1,17 @@
-from SRL import test_SRL
-from DetailHotelu import test_Detail
-from FM import test_FM
-from LM import test_LM
-from SDO import test_SDO
-from HP import test_HomePage
+from SRL import SRL
+from DetailHotelu import Detail
+from FM import FM
+from LM import LM
+from SDO import SDO
+from HP import HomePage
 from threading import Thread
 from to_import import caps
 
 
 for cap in caps:
-        Thread(target=test_SRL, args=(cap,)).start()
-        Thread(target=test_Detail, args=(cap,)).start()
-        Thread(target=test_FM, args=(cap,)).start()
-        Thread(target=test_LM, args=(cap,)).start()
-        Thread(target=test_SDO, args=(cap,)).start()
-        Thread(target=test_HomePage, args=(cap,)).start()
+        Thread(target=SRL, args=(cap,)).start()
+        Thread(target=Detail, args=(cap,)).start()
+        Thread(target=FM, args=(cap,)).start()
+        Thread(target=LM, args=(cap,)).start()
+        Thread(target=SDO, args=(cap,)).start()
+        Thread(target=HomePage, args=(cap,)).start()
