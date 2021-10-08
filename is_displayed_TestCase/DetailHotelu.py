@@ -5,12 +5,12 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from to_import_secret import sendEmail, comandExecutor
-from to_import import acceptConsent, URL_detail, caps, closePopupBanner
+from to_import import acceptConsent, URL_detail, caps
 
 ##there is new SRL rn so gotta prepare that, for now I created this test just for the detail of hotel it self, hard url
 
 
-def Detail(desired_cap):
+def Detail_isDisplayed(desired_cap):
     driver = webdriver.Remote(
         command_executor=comandExecutor,
         desired_capabilities=desired_cap)
@@ -80,5 +80,5 @@ def Detail(desired_cap):
     driver.quit()
 
 for cap in caps:
-        Thread(target=Detail, args=(cap,)).start()
+        Thread(target=Detail_isDisplayed, args=(cap,)).start()
 

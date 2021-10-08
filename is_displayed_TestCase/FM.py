@@ -9,7 +9,7 @@ from to_import import acceptConsent, URL, URL_fmExotika, caps
 
 
 
-def FM(desired_cap):
+def FM_isDisplayed(desired_cap):
     driver = webdriver.Remote(
         command_executor=comandExecutor,
         desired_capabilities=desired_cap)
@@ -73,5 +73,5 @@ def FM(desired_cap):
     driver.quit()
 
 for cap in caps:
-        Thread(target=FM, args=(cap,)).start()
+        Thread(target=FM_isDisplayed, args=(cap,)).start()
 

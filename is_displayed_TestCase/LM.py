@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from to_import_secret import sendEmail, comandExecutor
 from to_import import acceptConsent, URL, URL_lm, caps
 
-def LM(desired_cap):
+def LM_isDisplayed(desired_cap):
     driver = webdriver.Remote(
         command_executor=comandExecutor,
         desired_capabilities=desired_cap)
@@ -67,4 +67,4 @@ def LM(desired_cap):
     driver.quit()
 
 for cap in caps:
-        Thread(target=LM, args=(cap,)).start()
+        Thread(target=LM_isDisplayed, args=(cap,)).start()

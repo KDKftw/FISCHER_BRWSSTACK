@@ -9,7 +9,7 @@ from to_import_secret import sendEmail, comandExecutor
 from to_import import acceptConsent, URL, URL_faq, caps
 
 
-def HomePage(desired_cap):
+def HomePage_isDisplayed(desired_cap):
     driver = webdriver.Remote(
         command_executor=comandExecutor,
         desired_capabilities=desired_cap)
@@ -84,4 +84,4 @@ def HomePage(desired_cap):
     driver.quit()
 
 for cap in caps:
-        Thread(target=HomePage, args=(cap,)).start()
+        Thread(target=HomePage_isDisplayed, args=(cap,)).start()

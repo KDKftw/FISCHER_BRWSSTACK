@@ -29,7 +29,7 @@ def proklikNaSRLzHP(driver):
 
     time.sleep(2)
 
-def SRL(desired_cap):
+def SRL_isDisplayed(desired_cap):
     driver = webdriver.Remote(
         command_executor=comandExecutor,
         desired_capabilities=desired_cap)
@@ -104,4 +104,4 @@ def SRL(desired_cap):
     driver.quit()
 
 for cap in caps:
-        Thread(target=SRL, args=(cap,)).start()
+        Thread(target=SRL_isDisplayed, args=(cap,)).start()

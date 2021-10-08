@@ -9,10 +9,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from to_import_secret import sendEmail, comandExecutor
 from to_import import acceptConsent, URL, URL_stat, caps, URL_covidInfo, closeExponeaBanner
 
-driver = webdriver.Chrome(executable_path=r"C:\Users\KDK\Desktop\Selenium setup\chromedriver94.exe")
-wait = WebDriverWait(driver, 150000)
 
-def covidInfo_test(driver):
+
+def covidInfo_isDisplayed(desired_cap):
+    driver = webdriver.Remote(
+    command_executor=comandExecutor,
+        desired_capabilities=desired_cap)
+
+    wait = WebDriverWait(driver, 150000)
     driver.get(URL_covidInfo)
     time.sleep(1)
     acceptConsent(driver)
@@ -31,26 +35,24 @@ def covidInfo_test(driver):
                 print("gridy jdou videt")
             else:
                 url = driver.current_url
-                msg = " Problem s gridy vocid info " + url
+                msg = " Problem s gridy cocid info wholeGridsAll " + url
                 sendEmail(msg)
 
     except NoSuchElementException:
         url = driver.current_url
-        msg = "Problem s gridy vocid info " + url
+        msg = "Problem s gridy covid info wholeGridsAll " + url
         sendEmail(msg)
-
-
-
 
     contentItemsAll = driver.find_elements_by_xpath("//*[@class='f_tile-content-item']")
     contentItemsSingle = driver.find_element_by_xpath("//*[@class='f_tile-content-item']")
+
     try:
         wait.until(EC.visibility_of(contentItemsSingle))
         for WebElement in contentItemsAll:
             jdouvidet = WebElement.is_displayed()
             if jdouvidet == True:
                 pass
-                print("content jdou videt")
+                ##print("content jdou videt")
             else:
                 url = driver.current_url
                 msg = " Problem s content vocid info " + url
@@ -58,7 +60,10 @@ def covidInfo_test(driver):
 
     except NoSuchElementException:
         url = driver.current_url
-        msg = "Problem s content vocid info " + url
+        msg = "Problem s content covid info contentItemsAll " + url
         sendEmail(msg)
 
-covidInfo_test(driver)
+    driver.quit()
+
+for cap in caps:
+        Thread(target=covidInfo_isDisplayed, args=(cap,)).start()
