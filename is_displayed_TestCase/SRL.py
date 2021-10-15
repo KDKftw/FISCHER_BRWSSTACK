@@ -34,8 +34,8 @@ def SRL_isDisplayed(desired_cap):
         command_executor=comandExecutor,
         desired_capabilities=desired_cap)
     wait = WebDriverWait(driver, 150000)
-    driver.get("https://www.fischer.cz/vysledky-vyhledavani?d=826|623|741|735|618|619|624|973|993|595|972|648|746|1126|1129|1124|1128|1059|1118|1119|1121|625|1127|1125|861|1115|1132|1120|709|711|1117|603|1116|1130|1131|614|1123|1093|1198|1114|1122|620&tt=1&dd=2021-10-15&rd=2021-12-15&nn=7|8|9&ka1=10&kc1=1&ac1=2")
-    ##proklikNaSRLzHP(driver)
+    ##driver.get("https://www.fischer.cz/vysledky-vyhledavani?d=826|623|741|735|618|619|624|973|993|595|972|648|746|1126|1129|1124|1128|1059|1118|1119|1121|625|1127|1125|861|1115|1132|1120|709|711|1117|603|1116|1130|1131|614|1123|1093|1198|1114|1122|620&tt=1&dd=2021-10-15&rd=2021-12-15&nn=7|8|9&ka1=10&kc1=1&ac1=2")
+    proklikNaSRLzHP(driver)
 
     try:
         hotelySingle = driver.find_element_by_xpath("//*[@class='f_searchResult'and not(@style='display: none;')]//*[@class='f_searchResult-content-item']")        ##
