@@ -13,7 +13,7 @@ URL_fmExotika = URL+"/first-minute/zima"
 URL_detail = URL+"/turecko/turecka-riviera/alanya/kleopatra-royal-palm?DS=1&GIATA=38694&D=627|974|596|712|684|955&HID=129375&MT=5&DI=13&RT=15&NN=7&RD=2021-09-25&DD=2021-09-18&DP=4305&TO=4305|4309|2682|4308|4312&MNN=7&TT=1&PID=AYPAL&DPR=Fischer&TTM=1&TOM=4305|4309|2682|4308|4312&DF=2021-09-18|2021-10-19&ERM=0&NNM=7&ac1=2&kc1=0&ic1=0"
 URL_covidInfo = URL+"/covid-info"
 
-caps2=[{
+caps=[{
       'os_version': 'Big Sur',
       'os': 'OS X',
       'browser': 'safari',
@@ -31,7 +31,7 @@ caps3 = [{
       'build': 'browserstack-build-1'
       }]
 
-caps = [   {
+caps2 = [   {
       'os_version': '10',
       'os': 'Windows',
       'browser': 'chrome',
