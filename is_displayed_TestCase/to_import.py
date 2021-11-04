@@ -10,7 +10,7 @@ URL_stat = URL+"/recko"
 URL_lm = URL+"/last-minute"
 URL_fm = URL+"/first-minute"
 URL_fmExotika = URL+"/first-minute/zima"
-URL_detail = URL+"/turecko/turecka-riviera/alanya/kleopatra-royal-palm?DS=1&GIATA=38694&D=627|974|596|712|684|955&HID=129375&MT=5&DI=13&RT=15&NN=7&RD=2021-09-25&DD=2021-09-18&DP=4305&TO=4305|4309|2682|4308|4312&MNN=7&TT=1&PID=AYPAL&DPR=Fischer&TTM=1&TOM=4305|4309|2682|4308|4312&DF=2021-09-18|2021-10-19&ERM=0&NNM=7&ac1=2&kc1=0&ic1=0"
+URL_detail = URL+"/spanelsko/mallorca/cala-san-vicente/globales-simar?DS=1&GIATA=89104&D=953|1108|592|611|610|612|590|726|609|621|1009|680|622|669|1086|1194|670|978|594|675|1010|683&HID=153030&MT=5&DI=13&RT=15&NN=7&RD=2022-08-27&DD=2022-08-20&DP=4312&MNN=7|8|9&TT=1&PID=MSIM&DPR=Fischer&TTM=1&DF=2022-08-20|2022-09-20&ERM=0&NNM=7|8|9&ac1=2&kc1=0&ic1=0"
 URL_covidInfo = URL+"/covid-info"
 
 caps=[{
@@ -66,3 +66,11 @@ def closeExponeaBanner(driver):
 
     except NoSuchElementException:
         print( "nenasle se exponea banner")
+
+def consentAndExponeaBanner(driver):
+    time.sleep(3)
+    acceptConsent(driver)
+
+    time.sleep(2)
+    closeExponeaBanner(driver)
+    time.sleep(1)
