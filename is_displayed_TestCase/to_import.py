@@ -13,7 +13,7 @@ URL_fmExotika = URL+"/first-minute/zima"
 URL_detail = URL+"/spanelsko/mallorca/cala-san-vicente/globales-simar?DS=1&GIATA=89104&D=953|1108|592|611|610|612|590|726|609|621|1009|680|622|669|1086|1194|670|978|594|675|1010|683&HID=153030&MT=5&DI=13&RT=15&NN=7&RD=2022-08-27&DD=2022-08-20&DP=4312&MNN=7|8|9&TT=1&PID=MSIM&DPR=Fischer&TTM=1&DF=2022-08-20|2022-09-20&ERM=0&NNM=7|8|9&ac1=2&kc1=0&ic1=0"
 URL_covidInfo = URL+"/covid-info"
 
-caps=[{
+caps2=[{
       'os_version': 'Big Sur',
       'os': 'OS X',
       'browser': 'safari',
@@ -31,7 +31,7 @@ caps3 = [{
       'build': 'browserstack-build-1'
       }]
 
-caps2 = [   {
+caps = [   {
       'os_version': '10',
       'os': 'Windows',
       'browser': 'chrome',
