@@ -1,12 +1,6 @@
 from is_displayed_TestCase.to_import import acceptConsent, URL_detail, URL_stat, caps, closeExponeaBanner, consentAndExponeaBanner
 from is_displayed_TestCase.to_import_secret import comandExecutor, sendEmail
 import time
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium import webdriver
-from threading import Thread
-import time
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from threading import Thread
 from selenium import webdriver
@@ -14,7 +8,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import NoSuchElementException
-import requests
 from selenium.webdriver.support.ui import WebDriverWait
 
 
@@ -261,7 +254,7 @@ def detail_terminy_filtr_airport(desired_cap):
 
 for cap in caps:
 
-        ##Thread(target=detail_fotka, args=(cap,)).start()
-        ##Thread(target=detail_terminy_filtr_meal, args=(cap,)).start()
+        Thread(target=detail_fotka, args=(cap,)).start()
+        Thread(target=detail_terminy_filtr_meal, args=(cap,)).start()
         Thread(target=detail_terminy_filtr_airport, args=(cap,)).start()
 

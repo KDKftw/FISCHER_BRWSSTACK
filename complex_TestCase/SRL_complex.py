@@ -120,5 +120,55 @@ def SRLtestV2(desired_cap):
         windowHandle = windowHandle + 1
         print(windowHandle)
 
+def SRL_sort_cheapest(desired_cap):
+    driver = webdriver.Remote(
+        command_executor=comandExecutor,
+        desired_capabilities=desired_cap)
+
+    driver.get(URL_SRL)
+    wait = WebDriverWait(driver, 150000)
+    time.sleep(2)
+    acceptConsent(driver)
+    time.sleep(2)
+    closeExponeaBanner(driver)
+
+    cenaZajezduAllList = []                     ##one list that takes prices from the srl
+    cenaZajezduAllListSorted = []               ##second list takes the values too, then sorts it low to high
+
+    sortByCheapest = driver.find_element_by_xpath("//*[contains(text(), 'od nejlevnějšího')]")
+    sortByCheapest.click()
+
+    hotelyKarty = driver.find_element_by_xpath("//*[@class='f_searchResult'and not(@style='display: none;')]//*[@class='f_searchResult-content-item']")
+    wait.until(EC.visibility_of(hotelyKarty))
+    time.sleep(10)
+    x=0
+    cenaZajezduAll = driver.find_elements_by_xpath("//*[@class='f_tile-priceDetail-content']//*[@class='f_price']")
+
+    for WebElement in cenaZajezduAll:
+        cenaZajezduAllString = cenaZajezduAll[x].text
+        cenaZajezduAllString = cenaZajezduAllString[:-3]
+        cenaZajezduAllString = ''.join(cenaZajezduAllString.split())        ##delete spaces
+        cenaZajezduAllString = int(cenaZajezduAllString)        ##convert to int to do sort easily
+        x=x+1
+        cenaZajezduAllList.append(cenaZajezduAllString)
+        cenaZajezduAllListSorted.append(cenaZajezduAllString)
+
+    cenaZajezduAllListSorted.sort()     ##sorting second list low to high
+
+
+    if cenaZajezduAllListSorted == cenaZajezduAllList:          ##compare first list to second list, if is equal = good
+        print("Razeni od nejlevnejsiho je OK")
+
+    else:
+        print("Razeni od nejlevnejsiho je spatne")
+
+
+
+    print(cenaZajezduAllList)
+    print(cenaZajezduAllListSorted)
+
 for cap in caps:
-        Thread(target=SRLtestV2, args=(cap,)).start()
+        #Thread(target=SRLtestV2, args=(cap,)).start()
+        Thread(target=SRL_sort_cheapest, args=(cap,)).start()
+        #Thread(target=SRLtestV2, args=(cap,)).start()
+        #Thread(target=SRLtestV2, args=(cap,)).start()
