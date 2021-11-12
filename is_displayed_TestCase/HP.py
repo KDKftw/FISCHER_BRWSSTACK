@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from to_import_secret import sendEmail, comandExecutor
-from to_import import acceptConsent, URL, URL_faq, caps
+from to_import import acceptConsent, URL, URL_faq, caps, consentAndExponeaBanner
 
 
 def HomePage_isDisplayed(desired_cap):
@@ -17,7 +17,7 @@ def HomePage_isDisplayed(desired_cap):
     driver.get(URL)
     driver.maximize_window()
     time.sleep(2.5)
-    acceptConsent(driver)
+    consentAndExponeaBanner(driver)
     try:
         bannerSingle = driver.find_element_by_xpath("//*[@class='f_teaser-item']")
         bannerAll = driver.find_elements_by_xpath("//*[@class='f_teaser-item']")
