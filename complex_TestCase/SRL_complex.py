@@ -167,8 +167,95 @@ def SRL_sort_cheapest(desired_cap):
     print(cenaZajezduAllList)
     print(cenaZajezduAllListSorted)
 
+def SRL_sort_most_expensive(desired_cap):      ##the same only difference 1)click on nejdrazsi 2) sort list reverse=true
+    driver = webdriver.Remote(
+        command_executor=comandExecutor,
+        desired_capabilities=desired_cap)
+    driver.get(URL_SRL)
+    wait = WebDriverWait(driver, 150000)
+    time.sleep(2)
+    acceptConsent(driver)
+    time.sleep(2)
+    closeExponeaBanner(driver)
+
+    cenaZajezduAllList = []                     ##one list that takes prices from the srl
+    cenaZajezduAllListSorted = []               ##second list takes the values too, then sorts it low to high
+
+    sortByMostExpensive = driver.find_element_by_xpath("//*[contains(text(), 'od nejdražšího')]")
+    sortByMostExpensive.click()
+
+    hotelyKarty = driver.find_element_by_xpath("//*[@class='f_searchResult'and not(@style='display: none;')]//*[@class='f_searchResult-content-item']")
+    wait.until(EC.visibility_of(hotelyKarty))
+    time.sleep(10)
+    x=0
+    cenaZajezduAll = driver.find_elements_by_xpath("//*[@class='f_tile-priceDetail-content']//*[@class='f_price']")
+
+    for WebElement in cenaZajezduAll:
+        cenaZajezduAllString = cenaZajezduAll[x].text
+        cenaZajezduAllString = cenaZajezduAllString[:-3]
+        cenaZajezduAllString = ''.join(cenaZajezduAllString.split())
+        cenaZajezduAllString = int(cenaZajezduAllString)
+        ##print(type(cenaZajezduAllString))
+        x=x+1
+        cenaZajezduAllList.append(cenaZajezduAllString)
+        cenaZajezduAllListSorted.append(cenaZajezduAllString)
+
+
+    cenaZajezduAllListSorted.sort(reverse=True)
+
+
+    if cenaZajezduAllListSorted == cenaZajezduAllList:
+        print("Razeni od nejdrazshio je OK")
+
+    else:
+        print("Razeni od nejdrazshio je spatne")
+
+
+
+    print(cenaZajezduAllList)
+    print(cenaZajezduAllListSorted)
+    driver.quit()
+
+def SRL_map(desired_cap):
+    driver = webdriver.Remote(
+        command_executor=comandExecutor,
+        desired_capabilities=desired_cap)
+    driver.get(URL_SRL)
+    time.sleep(5)
+    acceptConsent(driver)
+    time.sleep(2)
+    closeExponeaBanner(driver)
+    zobrazitNaMape = driver.find_element_by_xpath("//*[@class='f_bar-item f_bar-map']")
+    zobrazitNaMape.click()
+
+    time.sleep(5)##try except na kolecko, pokud ok tak click, nenajde tak pokracovat dal
+    koleckoCislo = driver.find_element_by_xpath("//*[@class='leaflet-marker-icon marker-cluster marker-cluster-medium leaflet-zoom-animated leaflet-interactive']")
+    koleckoCislo.click()
+    time.sleep(5)
+
+    actualHotelPin = driver.find_element_by_xpath("//*[@class='leaflet-marker-icon leaflet-zoom-animated leaflet-interactive']")
+    ##actualHotelPin.click()
+    driver.execute_script("arguments[0].click();", actualHotelPin)          ##at this point im at detail hotelu na mapě
+
+    try:
+        imgMissing = driver.find_element_by_xpath("//*[@class='f_image f_image--missing']")         ##when theres no photo on the detail on map theres actually class that says it is missing
+        if imgMissing.is_displayed():                                                               ##so if I dont find this class = good
+            hotelBubble = driver.find_element_by_xpath("//*[@class='leaflet-popup-content'] //*[@class='f_bubble']")
+            msg = "V mape v bublibně hotelu se nezobrazuje fotka hotelu " + hotelBubble.text
+            sendEmail(msg)
+
+    except NoSuchElementException:
+        print("actually OK")
+
+    time.sleep(2)
+
+    hotelBubble = driver.find_element_by_xpath("//*[@class='leaflet-popup-content'] //*[@class='f_bubble']")
+    hotelBubble.click()
+    driver.quit()
+
+
 for cap in caps:
         #Thread(target=SRLtestV2, args=(cap,)).start()
-        Thread(target=SRL_sort_cheapest, args=(cap,)).start()
-        #Thread(target=SRLtestV2, args=(cap,)).start()
-        #Thread(target=SRLtestV2, args=(cap,)).start()
+        #Thread(target=SRL_sort_cheapest, args=(cap,)).start()
+        #Thread(target=SRL_sort_most_expensive, args=(cap,)).start()
+        Thread(target=SRL_map, args=(cap,)).start()
