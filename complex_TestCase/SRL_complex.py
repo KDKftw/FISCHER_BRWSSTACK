@@ -10,7 +10,7 @@ from threading import Thread
 
 ##driver = webdriver.Chrome(executable_path=r"C:\Users\KADOUN\Desktop\Selenium setup\chromedriver94.exe")
 ##driver = webdriver.Chrome(executable_path=r"C:\Users\KDK\Desktop\Selenium setup\chromedriver94.exe")
-URL_SRL = "https://www.fischer.cz/vysledky-vyhledavani?d=627|974|596|712|684|955&tt=1&to=4305|4309|2682|4308|4312&dd=2021-10-08&rd=2021-10-17&nn=7|8|9&m=5&ri=5&ac1=2"
+URL_SRL = "https://www.fischer.cz/vysledky-vyhledavani?d=826|623|741|735|618|619|624|973|993|595|972|648|620|746|1126|1129|1124|1128|1059|1118|1119|1121|625|1127|1125|861|1115|1132|1120|709|711|1117|603|1116|1130|1131|614|1123|1093|1198|1114|1122&tt=1&dd=2022-07-01&rd=2022-08-31&nn=7|8|9&ac1=2"
 ##URL_SRL = "https://www.eximtours.cz/vysledky-vyhledavani?tt=0&ac1=2&dd=2021-08-27&rd=2021-09-26&nn=7&d=63720|63719&pf=0&pt=900000"
 
 def SRLtestV2(desired_cap):
@@ -253,9 +253,59 @@ def SRL_map(desired_cap):
     hotelBubble.click()
     driver.quit()
 
+def SRL_filtr_strava(desired_cap):     ##jen na allinclusive, muzu si pohrat pozdeji for now enough
+    driver = webdriver.Remote(
+        command_executor=comandExecutor,
+        desired_capabilities=desired_cap)
+    driver.get(URL_SRL)
+    time.sleep(2)
+    acceptConsent(driver)
+    time.sleep(2)
+    closeExponeaBanner(driver)
+    time.sleep(2)
 
-for cap in caps:
-        #Thread(target=SRLtestV2, args=(cap,)).start()
-        #Thread(target=SRL_sort_cheapest, args=(cap,)).start()
-        #Thread(target=SRL_sort_most_expensive, args=(cap,)).start()
-        Thread(target=SRL_map, args=(cap,)).start()
+    stravaMenu = driver.find_element_by_xpath("//*[@class='f_menu-item']//*[contains(text(), 'Strava')]")
+    stravaMenu.click()
+    time.sleep(2)
+
+    allinclusiveMenu = driver.find_element_by_xpath("//*[@class='f_menu-item-content f_menu-item-content--sub'] //*[@class='f_input-label'] //*[contains(text(), 'All inclusive')]")          ##papani v menu ma vzdy vlastni value, 5=all inclusive
+    allinclusiveMenu.click()
+
+    potvrditMenu = driver.find_element_by_xpath("//*[@class='f_menu-item']//*[@class='f_button f_button--common f_button_set--smallest']")
+    potvrditMenu.click()
+    time.sleep(2)       ##potvrzeno chvilak casu na relload
+
+
+    stravaZajezdu = driver.find_elements_by_xpath("//*[@class='f_list-item f_icon f_icon--cutlery']")
+    x=0
+    stravaZajezduList = []
+    for WebElement in stravaZajezdu:
+        stravaZajezduString = stravaZajezdu[x].text
+        stravaZajezduList.append(stravaZajezduString)
+        x=x+1
+
+    y=0
+    stringInclusve = "All inclusive"
+    for _ in stravaZajezduList:
+        ##if stravaZajezduList[y] == "All inclusive":
+        if "All inclusive" in stravaZajezduList[y]:
+            print("ok")
+            y=y+1
+
+        else:
+            print("stravy nesedi k filtru")
+            y = y + 1
+    print(stravaZajezduList)
+    driver.quit()
+
+
+def spoustec():
+
+    for cap in caps:
+            #Thread(target=SRLtestV2, args=(cap,)).start()
+            #Thread(target=SRL_sort_cheapest, args=(cap,)).start()
+            #Thread(target=SRL_sort_most_expensive, args=(cap,)).start()
+            #Thread(target=SRL_map, args=(cap,)).start()
+            Thread(target=SRL_filtr_strava, args=(cap,)).start()
+
+spoustec()
